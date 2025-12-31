@@ -2,7 +2,7 @@ print("hellow \n welcome to our calculator \ngood luck")
 
 
 
-def Adder(a,b):
+def adder(a,b):
     return a+b
 
 def divider(a,b):
