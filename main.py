@@ -11,7 +11,7 @@ def main():
 
     match c:
         case '1':
-            print(Adder(a, b))
+            print(adder(a, b))
         case '2':
             print(multiply(a, b))
         case '3':
