@@ -1,5 +1,6 @@
+
 import pytest
-from main import adder, sub, multiply, divider
+from calculator.main import adder, sub, multiply, divider
 
 
 def test_adder():
