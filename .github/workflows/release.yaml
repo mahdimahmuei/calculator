@@ -1,0 +1,33 @@
+name: Release Docker image
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extract Release Version
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Build Docker image
+        run:
+          docker build -t calculator:${{ steps.version.outputs.VERSION }} .
+
+      - name: Save Docker image
+        run:
+          docker save calculator:${{ steps.version.ouputs.VERSION }} | gzip > calculator-${{ steps.version.outputs.VERSION }}.tar.gz
+
+      - name: Upload image
+        uses: softprops/action-gh-release@v2
+        with:
+          files: calculator-${{ steps.version.outputs.VERSION }}.tar.gz
