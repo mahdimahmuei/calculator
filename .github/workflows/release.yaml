@@ -38,5 +38,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Docker push image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/calculator:${{ steps.version.outputs.VERSION }}
+      - name: Push docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/calculator:${{ steps.version.outputs.VERSION }}
