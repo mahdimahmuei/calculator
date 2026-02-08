@@ -1,13 +1,6 @@
-name: Release Docker image
-
-on:
-  release:
-    types: [published]
-
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
 
@@ -17,17 +10,19 @@ jobs:
 
       - name: Extract Release Version
         id: version
+        # GITHUB_REF_NAME contains the tag (e.g., v1.0.0)
         run: echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
 
       - name: Build Docker image
-        run:
+        run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/calculator:${{ steps.version.outputs.VERSION }} .
 
       - name: Save Docker image
-        run:
-          docker save ${{ secrets.DOCKERHUB_USERNAME }}/calculator:${{ steps.version.ouputs.VERSION }} | gzip > calculator-${{ steps.version.outputs.VERSION }}.tar.gz
+        # Fixed the "ouputs" typo here
+        run: |
+          docker save ${{ secrets.DOCKERHUB_USERNAME }}/calculator:${{ steps.version.outputs.VERSION }} | gzip > calculator-${{ steps.version.outputs.VERSION }}.tar.gz
 
-      - name: Upload image
+      - name: Upload image to Release
         uses: softprops/action-gh-release@v2
         with:
           files: calculator-${{ steps.version.outputs.VERSION }}.tar.gz
@@ -39,4 +34,5 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Docker push image
+        # Double-check that this line matches the Build tag exactly
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/calculator:${{ steps.version.outputs.VERSION }}
