@@ -21,3 +21,8 @@ def test_multiply():
 def test_divider():
     assert divider(10, 2) == 5
     assert divider(3, 2) == 1.5
+    try:
+        divider(0,0)
+        raise ZeroDivisionError("false")
+    except ZeroDivisionError:
+        pass

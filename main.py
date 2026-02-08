@@ -6,8 +6,11 @@ def multiply(a, b):
     return a * b
 
 def divider(a,b):
+    if b==0:
+        raise ZeroDivisionError("can'n divide zero!")
     return a/b
-
+def sub(a,b):
+    return a-b
 
 def main():
     print('1. Add')
@@ -15,11 +18,11 @@ def main():
     print('3. Multiply')
     print('4. Divide')
     print('5. Exit')
-    c = input('choose: ')
-    a = int(input('enter number 1: '))
-    b = int(input('enter number 2: '))
 
     while True:
+        c = input('choose: ')
+        a = int(input('enter number 1: '))
+        b = int(input('enter number 2: '))
         try:
             match c:
                 case '1':
