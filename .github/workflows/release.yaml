@@ -21,11 +21,11 @@ jobs:
 
       - name: Build Docker image
         run:
-          docker build -t calculator:${{ steps.version.outputs.VERSION }} .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/calculator:${{ steps.version.outputs.VERSION }} .
 
       - name: Save Docker image
         run:
-          docker save calculator:${{ steps.version.ouputs.VERSION }} | gzip > calculator-${{ steps.version.outputs.VERSION }}.tar.gz
+          docker save ${{ secrets.DOCKERHUB_USERNAME }}/calculator:${{ steps.version.ouputs.VERSION }} | gzip > calculator-${{ steps.version.outputs.VERSION }}.tar.gz
 
       - name: Upload image
         uses: softprops/action-gh-release@v2
@@ -39,4 +39,4 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Docker push image
-        run: docker push calculator:${{ steps.version.outputs.VERSION }}
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/calculator:${{ steps.version.outputs.VERSION }}
