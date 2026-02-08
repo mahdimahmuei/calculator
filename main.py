@@ -9,6 +9,7 @@ def divider(a,b):
     if b==0:
         raise ZeroDivisionError("can'n divide zero!")
     return a/b
+
 def sub(a,b):
     return a-b
 
@@ -38,16 +39,6 @@ def main():
                     exit(0)
         except Exception as e:
             print('ERROR:', e)
-
-
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
